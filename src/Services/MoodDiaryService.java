@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MoodDiaryService {
-    private List<MoodEntry> entries;
+    private final List<MoodEntry> entries;
     private final Storage storage;
 
     public MoodDiaryService(Storage storage) {
@@ -61,6 +61,11 @@ public class MoodDiaryService {
                     return matchMood || matchNote || matchDate;
                 })
                 .forEach(System.out::println);
+    }
+
+    public void sortEntries(Comparator<MoodEntry> comparator){
+        entries.sort(comparator);
+        viewEntries();
     }
 
     private void save() {

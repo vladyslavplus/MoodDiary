@@ -1,8 +1,10 @@
+import Models.MoodEntry;
 import Models.MoodType;
 import Models.Storage;
 import Services.JsonFileManager;
 import Services.MoodDiaryService;
 
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +19,7 @@ public class Main {
             System.out.println("(3) - Edit record");
             System.out.println("(4) - Delete record");
             System.out.println("(5) - Search record");
+            System.out.println("(6) - Sort records");
             System.out.println("(0) - Exit");
             System.out.print("Your choice: ");
             int choice = scanner.nextInt();
@@ -36,6 +39,7 @@ public class Main {
                 case 3 -> editEntry(moodDiaryService, scanner);
                 case 4 -> deleteEntry(moodDiaryService, scanner);
                 case 5 -> searchEntries(moodDiaryService, scanner);
+                case 6 -> sortEntries(moodDiaryService, scanner);
                 default -> System.out.println("Invalid choice");
             }
         }
@@ -48,7 +52,7 @@ public class Main {
         }
 
         MoodType mood = null;
-        while(mood == null) {
+        while(true) {
             System.out.print("Enter your mood: ");
             String moodInput = scanner.nextLine().toUpperCase();
             try {
@@ -74,7 +78,7 @@ public class Main {
         }
 
         MoodType newMood = null;
-        while(newMood == null) {
+        while(true) {
             System.out.print("Enter new mood: ");
             String moodInput = scanner.nextLine().toUpperCase();
             try {
@@ -102,6 +106,33 @@ public class Main {
         System.out.print("Enter a key to search: ");
         String key = scanner.nextLine();
         moodDiaryService.searchEntries(key);
+        clearConsole();
+    }
+    public static void sortEntries(MoodDiaryService moodDiaryService, Scanner scanner) {
+        System.out.print("Sort by (id/mood/note/date): ");
+        String sortBy = scanner.nextLine().toLowerCase();
+
+        System.out.print("Order by (asc/desc): ");
+        String order = scanner.nextLine().toLowerCase();
+
+        Comparator<MoodEntry> comparator = switch (sortBy) {
+            case "id" -> Comparator.comparing(MoodEntry::getId);
+            case "mood" -> Comparator.comparing(entry -> entry.getMood().name());
+            case "note" -> Comparator.comparing(entry -> entry.getNote().toLowerCase());
+            case "date" -> Comparator.comparing(MoodEntry::getDate);
+            default -> null;
+        };
+
+        if(comparator == null) {
+            System.out.println("Invalid sort order! Try again!");
+            return;
+        }
+
+        if(order.equals("desc")) {
+            comparator = comparator.reversed();
+        }
+
+        moodDiaryService.sortEntries(comparator);
         clearConsole();
     }
     public static void pauseBeforeClear(Scanner scanner) {

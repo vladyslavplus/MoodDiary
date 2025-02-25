@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "mood": "MIXED",
+    "note": "test",
+    "date": "2025-02-25"
+  },
+  {
+    "id": 2,
+    "mood": "NEGATIVE",
+    "note": "test2",
+    "date": "2025-02-25"
+  },
+  {
+    "id": 3,
+    "mood": "NEUTRAL",
+    "note": "dasodsoa",
+    "date": "2025-02-25"
+  },
+  {
+    "id": 4,
+    "mood": "MIXED",
+    "note": "dsadsad3",
+    "date": "2025-02-25"
+  }
+]

@@ -50,9 +50,16 @@ public class MoodDiaryService {
 
     public void searchEntries(String key)
     {
+        System.out.println("Searching for " + key + "....");
+
         entries.stream()
-                .filter(entry -> entry.getMood().name().toLowerCase().contains(key.toLowerCase()) ||
-                        entry.getNote().toLowerCase().contains(key.toLowerCase()))
+                .filter(entry -> {
+                    boolean matchMood = entry.getMood().name().toLowerCase().contains(key.toLowerCase());
+                    boolean matchNote = entry.getNote().toLowerCase().contains(key.toLowerCase());
+                    boolean matchDate = entry.getDate().toString().toLowerCase().contains(key.toLowerCase());
+
+                    return matchMood || matchNote || matchDate;
+                })
                 .forEach(System.out::println);
     }
 

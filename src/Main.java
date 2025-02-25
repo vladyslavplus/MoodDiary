@@ -34,10 +34,13 @@ public class Main {
                     clearConsole();
                 }
                 case 3 -> editEntry(moodDiaryService, scanner);
+                case 4 -> deleteEntry(moodDiaryService, scanner);
+                case 5 -> searchEntries(moodDiaryService, scanner);
                 default -> System.out.println("Invalid choice");
             }
         }
     }
+
     private static void addEntry(MoodDiaryService moodDiaryService, Scanner scanner) {
         System.out.println("Choose your mood: ");
         for(MoodType type : MoodType.values()) {
@@ -88,7 +91,19 @@ public class Main {
         System.out.println("Entry edited successfully!");
         clearConsole();
     }
-
+    private static void deleteEntry(MoodDiaryService moodDiaryService, Scanner scanner) {
+        System.out.print("Enter the ID of the entry you would like to delete: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        moodDiaryService.deleteEntry(id);
+        System.out.println("Entry deleted successfully!");
+        clearConsole();
+    }
+    private static void searchEntries(MoodDiaryService moodDiaryService, Scanner scanner) {
+        System.out.print("Enter a key to search: ");
+        String key = scanner.nextLine();
+        moodDiaryService.searchEntries(key);
+        clearConsole();
+    }
     public static void pauseBeforeClear(Scanner scanner) {
         System.out.print("Press enter to continue... ");
         scanner.nextLine();

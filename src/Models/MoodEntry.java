@@ -16,13 +16,7 @@ public class MoodEntry {
         this.note = note;
         this.date = date;
     }
-    public MoodEntry(int id, MoodType mood, String note, LocalDate date) {
-        this.id = id;
-        this.mood = mood;
-        this.note = note;
-        this.date = date;
-        idCounter = Math.max(idCounter, id + 1);
-    }
+
 
     public int getId() {
         return id;
